@@ -1,17 +1,24 @@
 package com.alexistapia.restful.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Producto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
     private double precio;
 
-    // Constructor, getters y setters
+    // Constructores, getters y setters
 
     public Producto() {}
 
-    public Producto(int id, String nombre, double precio) {
-        this.id = id;
+    public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
     }
@@ -40,4 +47,3 @@ public class Producto {
         this.precio = precio;
     }
 }
-
