@@ -1,60 +1,55 @@
-package com.alexistapia.restful.controller;
+package com.alexistapia.restful.infrastructure.adapter.in.web;
 
+import com.alexistapia.restful.domain.model.Producto;
+import com.alexistapia.restful.domain.port.in.ProductoReadUseCase;
+import com.alexistapia.restful.domain.port.in.ProductoWriteUseCase;
 import com.alexistapia.restful.exception.ProductoNoEncontradoException;
-import com.alexistapia.restful.model.Producto;
-import com.alexistapia.restful.service.ProductoReadService;
-import com.alexistapia.restful.service.ProductoWriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*
- * Aplicando el principio de Inversion de Dependencias (DIP) y la separación de responsabilidades (SRP),
- * el controlador depende de la abstraccion del servicio, no de los detalles de implementacion.
- */
-
 @RestController
 @RequestMapping("/productos")
 public class ProductoController {
 
-    private final ProductoReadService productoReadService;
-    private final ProductoWriteService productoWriteService;
+    private final ProductoReadUseCase productoReadUseCase;
+    private final ProductoWriteUseCase productoWriteUseCase;
 
-    public ProductoController(ProductoReadService productoReadService, ProductoWriteService productoWriteService) {
-        this.productoReadService = productoReadService;
-        this.productoWriteService = productoWriteService;
+    public ProductoController(ProductoReadUseCase productoReadUseCase, ProductoWriteUseCase productoWriteUseCase) {
+        this.productoReadUseCase = productoReadUseCase;
+        this.productoWriteUseCase = productoWriteUseCase;
     }
 
     @GetMapping
     public ResponseEntity<List<Producto>> obtenerTodosLosProductos() {
-        List<Producto> productos = productoReadService.obtenerTodosLosProductos();
+        List<Producto> productos = productoReadUseCase.obtenerTodosLosProductos();
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Producto> obtenerProductoPorId(@PathVariable int id) {
-        Producto producto = productoReadService.obtenerProductoPorId(id)
+        Producto producto = productoReadUseCase.obtenerProductoPorId(id)
                 .orElseThrow(() -> new ProductoNoEncontradoException(id));
         return new ResponseEntity<>(producto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<Producto> crearProducto(@RequestBody Producto producto) {
-        Producto nuevoProducto = productoWriteService.crearProducto(producto);
+        Producto nuevoProducto = productoWriteUseCase.crearProducto(producto);
         return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Producto> actualizarProducto(@PathVariable int id, @RequestBody Producto detallesProducto) {
-        Producto productoActualizado = productoWriteService.actualizarProducto(id, detallesProducto);
+        Producto productoActualizado = productoWriteUseCase.actualizarProducto(id, detallesProducto);
         return new ResponseEntity<>(productoActualizado, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable int id) {
-        productoWriteService.eliminarProducto(id);
+        productoWriteUseCase.eliminarProducto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

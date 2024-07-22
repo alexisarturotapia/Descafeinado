@@ -1,14 +1,9 @@
-package com.alexistapia.restful.model;
+package com.alexistapia.restful.domain.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-/*
-*Aplicando el principio de Responsabilidad Unica (SRP),
-*la clase Producto solo tiene una responsabilidad: representar un producto en el sistema.
-*/
 
 @Entity
 public class Producto {
@@ -18,8 +13,6 @@ public class Producto {
     private int id;
     private String nombre;
     private double precio;
-
-    // Constructores, getters y setters
 
     public Producto() {}
 

@@ -1,8 +1,8 @@
-package com.alexistapia.restful.service;
+package com.alexistapia.restful.domain.port.in;
 
-import com.alexistapia.restful.model.Producto;
+import com.alexistapia.restful.domain.model.Producto;
 
-public interface ProductoWriteService {
+public interface ProductoWriteUseCase {
     Producto crearProducto(Producto producto);
     Producto actualizarProducto(int id, Producto detallesProducto);
     void eliminarProducto(int id);
