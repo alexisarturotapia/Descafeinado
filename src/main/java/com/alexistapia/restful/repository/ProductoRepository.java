@@ -6,10 +6,10 @@ import org.springframework.stereotype.Repository;
 
 /*
 * Aplicando el principio de Inversion de Dependencias (DIP),
-* dependemos de abstracciones (JpaRepository), no de implementaciones.
+* dependemos de abstracciones (BaseRepository), no de implementaciones.
 */
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Integer> {
+public interface ProductoRepository extends BaseRepository<Producto, Integer> {
 }
 
