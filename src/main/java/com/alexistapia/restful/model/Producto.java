@@ -5,6 +5,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/*
+*Aplicando el principio de Responsabilidad Unica (SRP),
+*la clase Producto solo tiene una responsabilidad: representar un producto en el sistema.
+*/
+
 @Entity
 public class Producto {
 
